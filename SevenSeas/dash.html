@@ -1,0 +1,177 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="content-language" content="ja">
+<title>亡霊さんおしゃべりマスーン</title>
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<style type="text/css">
+
+html{
+  margin: 0;
+  padding: 0;
+  font-family: "メイリオ";
+}
+
+html *{
+  margin: 0;
+  padding: 0;
+  position: relative;
+  -o-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body{
+  background-color: #A9A9A9;
+}
+
+textarea{
+  width: 35vmin;
+  height: 35vmin;
+  resize: none;
+}
+
+input[type="button"]{
+  background-color: #F0F8FF;
+  padding: 1vmin;
+  font-weight: bold;
+  border-radius: 5px;
+  margin: 2vmin 2vmin 0 2vmin;
+  cursor: pointer;
+  bottom: -1vmin;
+}
+
+input[type="button"]:hover{
+  background-color: #FFD700;
+}
+
+input[type="checkbox"]{
+  display: none;
+}
+
+h1{
+  display: block;
+  width: 80%;
+  position: absolute;
+  left: 50%;
+  margin-left: -40%;
+  top: -6vh;
+  letter-spacing: 3px;
+}
+
+h2{
+  display: block;
+  margin: 0;
+}
+
+p{
+  display: block;
+  line-height: 1.2em;
+  background-color: #ADD8E6;
+  width: 90vmin;
+  padding: 2.5vmin;
+  position: absolute;
+  top: 66vh;
+  left: 50%;
+  margin-left: -45vmin;
+  text-align: center;
+  border-radius: 10px;
+}
+
+#wrap{
+  background-color: #ADD8E6;
+  width: 90vmin;
+  padding: 4vmin;
+  position: absolute;
+  top: 10vh;
+  left: 50%;
+  margin-left: -45vmin;
+  text-align: center;
+  border-radius: 10px;
+}
+
+#w-box{
+  width: 100%;
+  display: -moz-flex;
+  display: -o-flex;
+  display: -webkit-flex;
+  display: -ms-flex;
+  display: flex;
+  justify-content: space-between;
+}
+
+span#ash_mode{
+  position: absolute;
+  top: 1vmin;
+  right: 2vmin;
+  font-size: small;
+  font-weight: bold;
+}
+
+</style>
+</head>
+<body>
+<div id="wrap">
+<h1>亡霊さんおしゃべりマスーン</h1>
+<div id="w-box">
+<div id="left">
+<h2>文章を入力</h2>
+<textarea id="set"></textarea>
+</div>
+
+<div id="right">
+<h2>変換結果の出力</h2>
+<textarea id="out"></textarea>
+</div>
+</div>
+
+<div id="btn">
+<input type="button" value="変換する" id="change">
+<input type="button" value="リセット" id="reset">
+<input type="checkbox" id="ash_check" checked>
+</div>
+
+</div>
+
+<p>
+いまの変換除外文字「、。　 …！!？?」。<br>
+それ以外はすごくダッシュした。
+</p>
+
+<script>
+var i = 0;//for使いまわし用]
+//変換ボタンの処理
+$("#change").click(function(){
+    //入力文章の取得
+    var word = $("#set").val();
+    word = word.split("\n");
+
+    //配列を合成して、出力文字列を生成
+    var out = "";
+    for(i = 0; i < word.length; i++){
+        word[i] =  word[i].replace(/[^、。　 …！!？?]/g, '―');
+        out += word[i];
+    };
+    //袋アイテムの二行改行を修正
+    out = out.replace(/\n\nただし/g, '\nただし');
+    //その他変換し切れてないものの修正
+    out = out.replace(/\n\n-\n/g, '\n');
+    //最終行の改行を消去
+    out = out.replace(/\n$/g, '');
+    //テキストエリアに出力
+    $("#out").val(out);
+});
+
+//リセットボタンの処理
+$("#reset").click(function(){
+    $("#set, #out").val("");
+});
+
+</script>
+
+</body>
+</html>
